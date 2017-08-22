@@ -64,6 +64,6 @@ D:\Multiversal\Projects\INJURY\WebApplication1\WebApplication1\bin\Microsoft.Owi
 D:\Multiversal\Projects\INJURY\WebApplication1\WebApplication1\bin\Microsoft.Owin.Security.Google.xml
 D:\Multiversal\Projects\INJURY\WebApplication1\WebApplication1\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Multiversal\Projects\INJURY\WebApplication1\WebApplication1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\Multiversal\Projects\INJURY\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
 D:\Multiversal\Projects\INJURY\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 D:\Multiversal\Projects\INJURY\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
+D:\Multiversal\Projects\INJURY\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
