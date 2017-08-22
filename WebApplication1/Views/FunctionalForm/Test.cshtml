@@ -1,0 +1,913 @@
+﻿@using WebApplication1.Models
+@model Medical
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+@{    Layout = "~/Views/Shared/_Layout.cshtml";}
+<style>
+    h1 {
+        color: white;
+        background-color: black;
+    }
+</style>
+
+<div class="container">
+    <section id="medicalform">
+        @using (Html.BeginForm("Test", "FunctionalForm", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+            @Html.HiddenFor(m => m.TestId)
+
+            <h1>PAIN DESCRIPTION</h1>
+            <div class="form-group">
+                @Html.Label("Which of the following best describes your pain? (check one)", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.BestDescribesPain)
+                    {
+                        <input type="radio" name="BestDescribesPainStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                            @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+                <div class="form-group">
+                    @Html.Label("Which of the following best describes the frequency of your pain? (check one)", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @foreach (var item in Model.BestDescribesFrequencyPain)
+                        {
+                            <input type="radio" name="BestDescribesFrequencyPainStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                            @Html.Label(item.Text, new { @class = "control-label" })
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("What makes your pain feel worse? (check all that apply)", new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @foreach (var item in Model.PainFeelWorse)
+                        {
+                            <input type="radio" name="PainFeelWorseStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                            @Html.Label(item.Text, new { @class = "control-label" })
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.makesPainFeelBetter, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.makesPainFeelBetter, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.makesPainFeelBetter, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            //--------------
+            //            -----------
+            <h1>SYMPTOM DIAGRAM</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Using the diagram at right, please indicate the location and type of symptoms you are experiencing.</h3>
+                    <p style="font-size:6px; color:#03225C;">(Use the symbols from the diagram key to indicate the location and type of symptom on the image.)</p>
+                    <table style="width:60%;">
+                        <thead>
+                            <tr><td>SYMBOL</td><td>SYMPTOM</td></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>X</td><td>Paint</td></tr>
+                            <tr><td>.....</td><td>numbness</td></tr>
+                            <tr><td>_ _ _</td><td>tingling</td></tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-md-6">
+                    <img src="~/Content/man.png" style="height:50%; width:50%; margin-left:-15px;" />
+                </div>
+            </div>
+
+            //--------------
+            //            -----------
+            <h1>GENERAL MEDICAL HISTORY</h1>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.Label("Do you have a history of cancer?", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.HistoryOfCancer)
+                                {
+                                    <input type="radio" name="HistoryOfCancerStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Do you have a pacemaker?", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @foreach (var item in Model.Pacemaker)
+                                {
+                                    <input type="radio" name="PacemakerStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Do you have hypertension?", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @foreach (var item in Model.Hypertension)
+                                {
+                                    <input type="radio" name="HypertensionStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            @Html.Label("Do you have bowel/bladder problems?", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Are you diabetic?", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @foreach (var item in Model.Diabetic)
+                                {
+                                    <input type="radio" name="DiabeticStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Are you pregnant?", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @foreach (var item in Model.Pregnant)
+                                {
+                                    <input type="radio" name="PregnantStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                    @Html.LabelFor(m => m.PastMedicalHistory, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.PastMedicalHistory, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PastMedicalHistory, "", new { @class = "text-danger" })
+                    </div>
+            </div>
+
+                <h3>Please rate the level of pain you have experienced over the past 30 days:</h3>
+                <div class="form-group">
+                    @Html.Label("What number on the pain scale best describes your pain right now?", new { @class = "control-label col-md-8" })
+                    <div class="col-md-4">
+                        @foreach (var item in Model.Pregnant)
+                        {
+                            <input type="radio" name="PregnantStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("What number on the pain scale describes your worst pain over the past 30 days?", new { @class = "control-label col-md-8" })
+                    <div class="col-md-4">
+                        @foreach (var item in Model.Pregnant)
+                        {
+                            <input type="radio" name="PregnantStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("What number on the pain scale describes your least pain over the past 30 days?", new { @class = "control-label col-md-8" })
+                    <div class="col-md-4">
+                        @foreach (var item in Model.Pregnant)
+                        {
+                            <input type="radio" name="PregnantStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                        }
+                    </div>
+                </div>
+
+            //--------------
+            //            -----------
+
+            <h1>BIOGRAPHIC INFORMATION</h1>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Pin, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.Pin, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Pin, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+
+                            @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.Label("Height: ", new { @class = "col-md-2 control-label" })
+
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.feet, new { @class = "form-control" }) feet
+                            @Html.ValidationMessageFor(m => m.feet, "", new { @class = "text-danger" })
+                            @Html.EditorFor(m => m.inches, new { @class = "form-control" }) inches
+                            @Html.ValidationMessageFor(m => m.inches, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Weight, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.Weight, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.Label("Sex: ", new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @foreach (var item in Model.Sex)
+                            {
+                                <input type="radio" name="SexStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                @Html.Label(item.Text, new { @class = "control-label" })
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Dominant Hand: ", new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @foreach (var item in Model.DominantHand)
+                            {
+                                <input type="radio" name="DominantHandStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                @Html.Label(item.Text, new { @class = "control-label" })
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Today, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @*@Html.TextBoxFor(m => m.Today, new { @class = "form-control", type = "datetime-local" })*@
+                            @Html.TextBoxFor(m => m.Today, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Today, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+
+
+            //--------------
+            //            -----------
+            <h1>PERSONAL HEALTH HISTORY</h1>
+            <div class="form-group">
+                @Html.Label("Do you smoke?", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("When was your last physical exam?", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Have you reached menopause?", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Have you had a PSA test within the last year?", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+
+            <h3>Do you have a history of any of the following illnesses or conditions?</h3>
+
+            <div class="form-group">
+                @Html.Label("Thyroid Dysfunction", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Rheumatoid Arthritis, Lupus, or Psoriatic", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Osteoarthritis", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("Osteoporosis", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Cancer", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Stroke", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("High Cholesterol", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("High Blood Pressure", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Diabetes", new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                        @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+            //--------------
+            //            -----------
+
+            <h1>MEDICATIONS</h1>
+            <h3>Are you currently taking, or have you taken in the last year any of the following medications?</h3>
+            <div class="form-group">
+                @Html.Label("Over the counter (OTC) Non-Steroidal, Anti-Inflammatory medications? (such as Tylenol, Ibuprofen, Motrin, Aspirin)", new { @class = "control-label col-md-8" })
+                <div class="col-md-4">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Prescription Non-Steroidal, Anti-inflammatory medication? (such as Naproxen, Mobic, Tylenol #3)", new { @class = "control-label col-md-8" })
+                <div class="col-md-4">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Narcotic Pain Medications? (such as Oxycontin, Hydrocodone, Morphine)", new { @class = "control-label col-md-8" })
+                <div class="col-md-4">
+
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                    
+                        <h1>SURGERY</h1>
+                        <h3>Have you had surgery in any of the following areas resulting in at least 1 night in the hospital?</h3>
+
+                        <div class="form-group">
+                            @Html.Label("Head", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Cardiovascular/Pulmonary", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Abdominal", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Genito/Urinary", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Spine", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            
+                            <h3 class="control-label col-md-12" for="Cardiovascular_Pulmonary">What effect has your past surgery had on your ability to perform daily activities?</h3>
+
+                            <div class="col-md-12">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        
+
+
+                    </div>
+                    <div class="col-md-6">
+                     
+                        <h1>FAMILY HISTORY</h1>
+                        <h3>Does anyone in your immediate family have a history of the following:</h3>
+
+                        <div class="form-group">
+                            @Html.Label("Diabetes", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Thyroid Dysfunction", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Rheumatoid Arthritis, Lupus, or Psoriatic", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Osteoarthritis", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Osteoporosis", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Cancer", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Stroke", new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+       
+
+         
+
+            //--------------
+            //            -----------
+            <h1 >Oswestry Neck Pain Questionnaire</h1>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <p>This questionnaire is designed to enable us to understand how much your neck pain has affected your ability to manage everyday activities. Please answer each section by selecting the ONE CHOICE that most applies to you. We realize that you may feel that more than one statement may relate to you, but <strong>please circle the one choice which closely describes your problem right now.</strong></p>
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <h4>Section 1 - Pain Intensity</h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h4> Section 2 - Personal Care</h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h4>Section 3 - Lifting</h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h4>Section 4 - Reading </h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h4> Section 5 - Headache</h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <h4>Section 6 - Concentration</h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h4>Section 7 - Work</h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h4>Section 8 - Driving</h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h4> Section 9 - Sleeping</h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h4>Section 10 - Recreation </h4>
+                            <div class="row">
+                                @foreach (var item in Model.Bowel_bladder)
+                                {
+                                    <div>
+                                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+               <h4>Section 11 - Numeric Rating Scale (NRS)</h4>
+                @Html.Label("Try and assign a number from 0 to 10 to your current pain level. If you have no pain, use a 0. As the numbers get higher, they stand for pain that is getting worse. A 10 means the pain is as bad as it can be.", new { @class = "col-md-4 control-label" })
+                <div class="col-md-8">
+                    @foreach (var item in Model.Bowel_bladder)
+                    {
+                        <input type="radio" name="Bowel_bladderStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
+                                    @Html.Label(item.Text, new { @class = "control-label" })
+                    }
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Weight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            //--------------
+            //            -----------
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-6">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+        }
+    </section>
+
+
+</div>
+
+
+
