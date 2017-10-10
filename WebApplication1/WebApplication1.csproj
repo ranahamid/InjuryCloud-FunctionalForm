@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +35,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,6 +47,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -169,24 +175,42 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CervicalEvalController.cs" />
+    <Compile Include="Controllers\ElbowWristHandEvaluationController.cs" />
     <Compile Include="Controllers\FunctionalFormController.cs" />
+    <Compile Include="Controllers\GeneralFunctionalMobilityEvaluationController.cs" />
+    <Compile Include="Controllers\Helper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ShoulderEvaluationController.cs" />
+    <Compile Include="Controllers\SpinalEvaluationController.cs" />
+    <Compile Include="Controllers\TemporomandibularEvaluationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\FunctionalForm.cs">
-      <DependentUpon>FunctionalForm.dbml</DependentUpon>
-    </Compile>
+    <Compile Include="Models\CervicalEval.cs" />
+    <Compile Include="Models\ElbowWristHandEvaluation.cs" />
     <Compile Include="Models\FunctionalForm.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FunctionalForm.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\GeneralFunctionalMobilityEvaluation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\EmailData.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Medical.cs" />
+    <Compile Include="Models\ShoulderEvaluation.cs" />
+    <Compile Include="Models\SpinalEvaluation.cs" />
+    <Compile Include="Models\TemporomandibularEvaluation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\CrystalReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,9 +244,11 @@
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -252,6 +278,12 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\FunctionalForm\Test.cshtml" />
+    <Content Include="Views\CervicalEval\CernivalEval.cshtml" />
+    <Content Include="Views\ShoulderEvaluation\ShoulderEvaluation.cshtml" />
+    <Content Include="Views\ElbowWristHandEvaluation\ElbowWristHandEvaluation.cshtml" />
+    <Content Include="Views\TemporomandibularEvaluation\TemporomandibularEvaluation.cshtml" />
+    <Content Include="Views\GeneralFunctionalMobilityEvaluation\GeneralFunctionalMobilityEvaluation.cshtml" />
+    <Content Include="Views\SpinalEvaluation\SpinalEvaluation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -266,11 +298,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\FunctionalForm.dbml.layout">
       <DependentUpon>FunctionalForm.dbml</DependentUpon>
     </None>
+    <EmbeddedResource Include="Report\CrystalReport1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReport1.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

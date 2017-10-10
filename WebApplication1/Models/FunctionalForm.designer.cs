@@ -30,15 +30,15 @@ namespace WebApplication1.Models
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertMedicalHistory(MedicalHistory instance);
-    partial void UpdateMedicalHistory(MedicalHistory instance);
-    partial void DeleteMedicalHistory(MedicalHistory instance);
-    partial void InsertAnswer(Answer instance);
-    partial void UpdateAnswer(Answer instance);
-    partial void DeleteAnswer(Answer instance);
+    partial void InsertAnswerTbl(AnswerTbl instance);
+    partial void UpdateAnswerTbl(AnswerTbl instance);
+    partial void DeleteAnswerTbl(AnswerTbl instance);
     partial void InsertTestAnswer(TestAnswer instance);
     partial void UpdateTestAnswer(TestAnswer instance);
     partial void DeleteTestAnswer(TestAnswer instance);
+    partial void InsertMedicalHistory(MedicalHistory instance);
+    partial void UpdateMedicalHistory(MedicalHistory instance);
+    partial void DeleteMedicalHistory(MedicalHistory instance);
     #endregion
 		
 		public FunctionalFormDataContext() : 
@@ -71,19 +71,11 @@ namespace WebApplication1.Models
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<MedicalHistory> MedicalHistories
+		public System.Data.Linq.Table<AnswerTbl> AnswerTbls
 		{
 			get
 			{
-				return this.GetTable<MedicalHistory>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Answer> Answers
-		{
-			get
-			{
-				return this.GetTable<Answer>();
+				return this.GetTable<AnswerTbl>();
 			}
 		}
 		
@@ -92,6 +84,323 @@ namespace WebApplication1.Models
 			get
 			{
 				return this.GetTable<TestAnswer>();
+			}
+		}
+		
+		public System.Data.Linq.Table<MedicalHistory> MedicalHistories
+		{
+			get
+			{
+				return this.GetTable<MedicalHistory>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AnswerTbl")]
+	public partial class AnswerTbl : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _QuestionId;
+		
+		private string _AnswerDesc;
+		
+		private EntityRef<MedicalHistory> _MedicalHistory;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnQuestionIdChanging(int value);
+    partial void OnQuestionIdChanged();
+    partial void OnAnswerDescChanging(string value);
+    partial void OnAnswerDescChanged();
+    #endregion
+		
+		public AnswerTbl()
+		{
+			this._MedicalHistory = default(EntityRef<MedicalHistory>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionId", DbType="Int NOT NULL")]
+		public int QuestionId
+		{
+			get
+			{
+				return this._QuestionId;
+			}
+			set
+			{
+				if ((this._QuestionId != value))
+				{
+					if (this._MedicalHistory.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnQuestionIdChanging(value);
+					this.SendPropertyChanging();
+					this._QuestionId = value;
+					this.SendPropertyChanged("QuestionId");
+					this.OnQuestionIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerDesc", DbType="NVarChar(255)")]
+		public string AnswerDesc
+		{
+			get
+			{
+				return this._AnswerDesc;
+			}
+			set
+			{
+				if ((this._AnswerDesc != value))
+				{
+					this.OnAnswerDescChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerDesc = value;
+					this.SendPropertyChanged("AnswerDesc");
+					this.OnAnswerDescChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MedicalHistory_AnswerTbl", Storage="_MedicalHistory", ThisKey="QuestionId", OtherKey="Id", IsForeignKey=true)]
+		public MedicalHistory MedicalHistory
+		{
+			get
+			{
+				return this._MedicalHistory.Entity;
+			}
+			set
+			{
+				MedicalHistory previousValue = this._MedicalHistory.Entity;
+				if (((previousValue != value) 
+							|| (this._MedicalHistory.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._MedicalHistory.Entity = null;
+						previousValue.AnswerTbls.Remove(this);
+					}
+					this._MedicalHistory.Entity = value;
+					if ((value != null))
+					{
+						value.AnswerTbls.Add(this);
+						this._QuestionId = value.Id;
+					}
+					else
+					{
+						this._QuestionId = default(int);
+					}
+					this.SendPropertyChanged("MedicalHistory");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TestAnswer")]
+	public partial class TestAnswer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _TestId;
+		
+		private int _QuestionId;
+		
+		private System.Nullable<int> _AnswerId;
+		
+		private string _AnswerDesc;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTestIdChanging(string value);
+    partial void OnTestIdChanged();
+    partial void OnQuestionIdChanging(int value);
+    partial void OnQuestionIdChanged();
+    partial void OnAnswerIdChanging(System.Nullable<int> value);
+    partial void OnAnswerIdChanged();
+    partial void OnAnswerDescChanging(string value);
+    partial void OnAnswerDescChanged();
+    #endregion
+		
+		public TestAnswer()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TestId", DbType="NChar(10) NOT NULL", CanBeNull=false)]
+		public string TestId
+		{
+			get
+			{
+				return this._TestId;
+			}
+			set
+			{
+				if ((this._TestId != value))
+				{
+					this.OnTestIdChanging(value);
+					this.SendPropertyChanging();
+					this._TestId = value;
+					this.SendPropertyChanged("TestId");
+					this.OnTestIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionId", DbType="Int NOT NULL")]
+		public int QuestionId
+		{
+			get
+			{
+				return this._QuestionId;
+			}
+			set
+			{
+				if ((this._QuestionId != value))
+				{
+					this.OnQuestionIdChanging(value);
+					this.SendPropertyChanging();
+					this._QuestionId = value;
+					this.SendPropertyChanged("QuestionId");
+					this.OnQuestionIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerId", DbType="Int")]
+		public System.Nullable<int> AnswerId
+		{
+			get
+			{
+				return this._AnswerId;
+			}
+			set
+			{
+				if ((this._AnswerId != value))
+				{
+					this.OnAnswerIdChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerId = value;
+					this.SendPropertyChanged("AnswerId");
+					this.OnAnswerIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerDesc", DbType="NVarChar(2000)")]
+		public string AnswerDesc
+		{
+			get
+			{
+				return this._AnswerDesc;
+			}
+			set
+			{
+				if ((this._AnswerDesc != value))
+				{
+					this.OnAnswerDescChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerDesc = value;
+					this.SendPropertyChanged("AnswerDesc");
+					this.OnAnswerDescChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -110,7 +419,7 @@ namespace WebApplication1.Models
 		
 		private string _QuestionRegion;
 		
-		private EntitySet<Answer> _Answers;
+		private EntitySet<AnswerTbl> _AnswerTbls;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -128,7 +437,7 @@ namespace WebApplication1.Models
 		
 		public MedicalHistory()
 		{
-			this._Answers = new EntitySet<Answer>(new Action<Answer>(this.attach_Answers), new Action<Answer>(this.detach_Answers));
+			this._AnswerTbls = new EntitySet<AnswerTbl>(new Action<AnswerTbl>(this.attach_AnswerTbls), new Action<AnswerTbl>(this.detach_AnswerTbls));
 			OnCreated();
 		}
 		
@@ -212,16 +521,16 @@ namespace WebApplication1.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MedicalHistory_Answer", Storage="_Answers", ThisKey="Id", OtherKey="QuestionId")]
-		public EntitySet<Answer> Answers
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MedicalHistory_AnswerTbl", Storage="_AnswerTbls", ThisKey="Id", OtherKey="QuestionId")]
+		public EntitySet<AnswerTbl> AnswerTbls
 		{
 			get
 			{
-				return this._Answers;
+				return this._AnswerTbls;
 			}
 			set
 			{
-				this._Answers.Assign(value);
+				this._AnswerTbls.Assign(value);
 			}
 		}
 		
@@ -245,325 +554,16 @@ namespace WebApplication1.Models
 			}
 		}
 		
-		private void attach_Answers(Answer entity)
+		private void attach_AnswerTbls(AnswerTbl entity)
 		{
 			this.SendPropertyChanging();
 			entity.MedicalHistory = this;
 		}
 		
-		private void detach_Answers(Answer entity)
+		private void detach_AnswerTbls(AnswerTbl entity)
 		{
 			this.SendPropertyChanging();
 			entity.MedicalHistory = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Answer")]
-	public partial class Answer : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private int _QuestionId;
-		
-		private string _AnswerDesc;
-		
-		private EntityRef<MedicalHistory> _MedicalHistory;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnQuestionIdChanging(int value);
-    partial void OnQuestionIdChanged();
-    partial void OnAnswerDescChanging(string value);
-    partial void OnAnswerDescChanged();
-    #endregion
-		
-		public Answer()
-		{
-			this._MedicalHistory = default(EntityRef<MedicalHistory>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionId", DbType="Int NOT NULL")]
-		public int QuestionId
-		{
-			get
-			{
-				return this._QuestionId;
-			}
-			set
-			{
-				if ((this._QuestionId != value))
-				{
-					if (this._MedicalHistory.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnQuestionIdChanging(value);
-					this.SendPropertyChanging();
-					this._QuestionId = value;
-					this.SendPropertyChanged("QuestionId");
-					this.OnQuestionIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerDesc", DbType="NVarChar(255)")]
-		public string AnswerDesc
-		{
-			get
-			{
-				return this._AnswerDesc;
-			}
-			set
-			{
-				if ((this._AnswerDesc != value))
-				{
-					this.OnAnswerDescChanging(value);
-					this.SendPropertyChanging();
-					this._AnswerDesc = value;
-					this.SendPropertyChanged("AnswerDesc");
-					this.OnAnswerDescChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MedicalHistory_Answer", Storage="_MedicalHistory", ThisKey="QuestionId", OtherKey="Id", IsForeignKey=true)]
-		public MedicalHistory MedicalHistory
-		{
-			get
-			{
-				return this._MedicalHistory.Entity;
-			}
-			set
-			{
-				MedicalHistory previousValue = this._MedicalHistory.Entity;
-				if (((previousValue != value) 
-							|| (this._MedicalHistory.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._MedicalHistory.Entity = null;
-						previousValue.Answers.Remove(this);
-					}
-					this._MedicalHistory.Entity = value;
-					if ((value != null))
-					{
-						value.Answers.Add(this);
-						this._QuestionId = value.Id;
-					}
-					else
-					{
-						this._QuestionId = default(int);
-					}
-					this.SendPropertyChanged("MedicalHistory");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TestAnswer")]
-	public partial class TestAnswer : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _TestId;
-		
-		private int _QuestionId;
-		
-		private System.Nullable<int> _AnswerId;
-		
-		private string _AnswerDesc;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnTestIdChanging(string value);
-    partial void OnTestIdChanged();
-    partial void OnQuestionIdChanging(int value);
-    partial void OnQuestionIdChanged();
-    partial void OnAnswerIdChanging(System.Nullable<int> value);
-    partial void OnAnswerIdChanged();
-    partial void OnAnswerDescChanging(string value);
-    partial void OnAnswerDescChanged();
-    #endregion
-		
-		public TestAnswer()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TestId", DbType="NChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string TestId
-		{
-			get
-			{
-				return this._TestId;
-			}
-			set
-			{
-				if ((this._TestId != value))
-				{
-					this.OnTestIdChanging(value);
-					this.SendPropertyChanging();
-					this._TestId = value;
-					this.SendPropertyChanged("TestId");
-					this.OnTestIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuestionId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int QuestionId
-		{
-			get
-			{
-				return this._QuestionId;
-			}
-			set
-			{
-				if ((this._QuestionId != value))
-				{
-					this.OnQuestionIdChanging(value);
-					this.SendPropertyChanging();
-					this._QuestionId = value;
-					this.SendPropertyChanged("QuestionId");
-					this.OnQuestionIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerId", DbType="Int")]
-		public System.Nullable<int> AnswerId
-		{
-			get
-			{
-				return this._AnswerId;
-			}
-			set
-			{
-				if ((this._AnswerId != value))
-				{
-					this.OnAnswerIdChanging(value);
-					this.SendPropertyChanging();
-					this._AnswerId = value;
-					this.SendPropertyChanged("AnswerId");
-					this.OnAnswerIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerDesc", DbType="NVarChar(2000)")]
-		public string AnswerDesc
-		{
-			get
-			{
-				return this._AnswerDesc;
-			}
-			set
-			{
-				if ((this._AnswerDesc != value))
-				{
-					this.OnAnswerDescChanging(value);
-					this.SendPropertyChanging();
-					this._AnswerDesc = value;
-					this.SendPropertyChanged("AnswerDesc");
-					this.OnAnswerDescChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 }

@@ -1,0 +1,1730 @@
+﻿@using InjuryRiskAssessment.Models
+@model CervicalEval
+
+<div class="page-content-wrapper">
+    <div class="page-content" style="min-height: 250px">
+
+
+
+        <!--Date Picker-->
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/css/bootstrap-datetimepicker.min.css" />
+
+        <link rel="stylesheet" type="text/css" href="/content/styles/injurycloud.css">
+        <script type="text/javascript" src="~/Content/printThis.js"></script>
+        <!--Time Picker-->
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/flatpickr@3.0.7/dist/flatpickr.min.css">
+        <script type="text/javascript" src="https://unpkg.com/flatpickr@3.0.7/dist/flatpickr.js"></script>
+
+        <!-- BEGIN PAGE HEADER-->
+        <h3 class="page-title">
+            Intake Test
+        </h3>
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="/">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="#">Intake Entry</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li id="pagename">New</li>
+            </ul>
+        </div>
+        <!-- END PAGE HEADER-->
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet box red">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-gift"></i>Injury Cloud Risk Assessment
+                        </div>
+
+                    </div>
+                    <div class="portlet-body">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-3 col-xs-3" id="sidebar">
+
+
+
+                                <ul class="nav nav-tabs tabs-left">
+
+
+                                    <li class="" id="li_tab_6_0">
+                                        <a href="@Url.Action("Test", "Intake", new { id=Model.TestId })">Medical History </a>
+                                    </li>
+                                    <li class="active" id="li_tab_6_1">
+                                        <a href="@Url.Action("CernivalEval", "Intake", new {  id=Model.TestId })">Cervical/Thoracic Spine EVALUATION</a>
+                                    </li>
+
+                                    <li class="" id="li_tab_6_2">
+                                        <a href="@Url.Action("DailyNoteCervical", "Intake", new { id = Model.TestId })">Daily Note Cervical</a>
+                                    </li>
+                                    <li class="" id="li_tab_6_3">
+                                        <a href="@Url.Action("CervicalProgress", "Intake", new { id = Model.TestId })">Cervical/Thoracic Spine Progress</a>
+                                    </li>
+                                    <li class="" id="li_tab_6_4">
+                                        <a href="@Url.Action("CervicalDischarge", "Intake", new { id = Model.TestId })">Cervical/Thoracic Spine DISCHARGE</a>
+                                    </li>
+                                    <li class="" id="li_tab_6_5">
+                                        <a href="@Url.Action("LowerExtremityFunctional", "Intake", new { id = Model.TestId })">The Lower Extremity Functional </a>
+                                    </li>
+                                    <li class="" id="li_tab_6_6">
+                                        <a href="@Url.Action("WOMACOsteoarthritis", "Intake", new { id = Model.TestId })">WOMAC Osteoarthritis  </a>
+                                    </li>
+                                    <li class="" id="li_tab_6_7">
+                                        <a href="@Url.Action("UpperExtremityFunctional", "Intake", new { id = Model.TestId })">The Upper Extremity Functional  </a>
+                                    </li>
+                                    <li class="" id="li_tab_6_8">
+                                        <a href="@Url.Action("ShoulderEvaluation", "Intake", new { id = Model.TestId })">Shoulder Evaluation </a>
+                                    </li>
+                                    <li class="" id="li_tab_6_9">
+                                        <a href="@Url.Action("GeneralFunctionalMobilityEvaluation", "Intake", new { id = Model.TestId })">General FunctionalMobility Evaluation</a>
+                                    </li>
+                                    <li class="" id="li_tab_6_10">
+                                        <a href="@Url.Action("TemporomandibularEvaluation", "Intake", new { id = Model.TestId })">Temporomandibular Evaluation</a>
+                                    </li>
+                                    <li class="" id="li_tab_6_11">
+                                        <a href="@Url.Action("ElbowWristHandEvaluation", "Intake", new { id = Model.TestId })">Elbow Wrist Hand Evaluation</a>
+                                    </li>
+                                    <li class="" id="li_tab_6_12">
+                                        <a href="@Url.Action("LowerExtremityProgress", "Intake", new { id = Model.TestId })">LOWER EXTREMITY PROGRESS SUMMARY </a>
+                                    </li>
+                                    <li class="" id="li_tab_6_13">
+                                        <a href="@Url.Action("UpperExtremityProgress", "Intake", new { id = Model.TestId })">UPPER EXTREMITY PROGRESS SUMMARY </a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div id="questions">
+                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                                <style type="text/css">
+                                    .form .form-body {
+                                        padding: 0;
+                                    }
+
+                                    .cntleft_aa {
+                                        width: auto;
+                                    }
+
+                                    .detailformbox_aa {
+                                        width: auto;
+                                    }
+
+                                    .dtlformbx_main_aa {
+                                        width: auto;
+                                        height: 40px;
+                                    }
+
+                                        .dtlformbx_main_aa span {
+                                            width: 110px;
+                                        }
+
+                                    .dtlformbx_01_aa {
+                                        margin: 0;
+                                        padding: 0;
+                                    }
+
+                                    .optionlist {
+                                        display: none;
+                                        position: fixed;
+                                        border: 1px solid #ADB2B5;
+                                        width: 125px;
+                                        height: 180px;
+                                        background-color: #F7F3F7;
+                                        z-index: 100000;
+                                    }
+
+                                    .sp-head_lft:hover {
+                                        background-position: -980px 0;
+                                        width: 41px;
+                                        height: 88px;
+                                        float: left;
+                                        background: url('/content/styles/images/head_lft_over.jpg') no-repeat top left;
+                                    }
+
+                                    .sp-head_rgt:hover {
+                                        background-position: -980px 0;
+                                        width: 41px;
+                                        height: 88px;
+                                        float: left;
+                                        background: url('/content/styles/images/head_rgt_hover.jpg') no-repeat top left;
+                                    }
+                                </style>
+                                <script>
+                                    $('.page-header').eq(1).remove();
+                                </script>
+
+
+
+                                <div class="col-md-10 col-ms-12" id="QuestionPartTest">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_6_0">
+                                            <div class="portlet box blue-hoki">
+                                                <div class="portlet-title">
+                                                    <div class="caption">
+                                                        <i class="fa fa-gift"></i>Intake test
+                                                    </div>
+
+                                                    <div class="tools">
+                                                        <a href="javascript:;" class="reload"></a>
+
+                                                    </div>
+                                                </div>
+                                                <div class="portlet-body form" id="printCernivalEvalReport">
+
+                                                    <!-- BEGIN FORM-->
+                                                    <div class="form-actions top">
+                                                    </div>
+                                                    <section id="medicalform" style="margin:20px;">
+                                                        @using (Html.BeginForm("CernivalEval", "Intake", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", name = "Qform" }))
+                                                        {
+                                                            @Html.AntiForgeryToken()
+
+                                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                            @Html.HiddenFor(m => m.TestId)
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.PatientName, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.PatientName, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.Dx_ICD_10, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.Dx_ICD_10, new { @class = "form-control input-large" })
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.Date, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5 date">
+
+
+                                                                            @Html.TextBoxFor(m => m.Date, new { @class = "form-control input-large" })
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.DOB, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5 date">
+
+                                                                            @Html.TextBoxFor(m => m.DOB, new { @class = "form-control input-large" })
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.Therapist, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.Therapist, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.Physician, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.Physician, new { @class = "form-control input-large" })
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.NextMDApt, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.NextMDApt, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.DateOnset, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5 date">
+
+                                                                            @Html.TextBoxFor(m => m.DateOnset, new { @class = "form-control input-large" })
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.MOI, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.MOI, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.PreviousTreatment, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.PreviousTreatment, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.Label("Did it help", new { @class = "control-label col-md-3" })
+                                                                        <div class="col-md-9">
+                                                                            @foreach (var item in Model.DidItHelp)
+                                                                            {
+                                                                                <input type="radio" name="DidItHelpStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.PastMedicalHistory, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.PastMedicalHistory, new { @class = "form-control input-large" })
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.History_ChiefComplaint, new { @class = "col-md-2 control-label" })
+                                                                        <div class="col-md-10">
+
+                                                                            @Html.TextAreaFor(m => m.History_ChiefComplaint, new { @class = "form-control resizer col-md-12 col-sm-12" })
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.DiagnosticFindings, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.DiagnosticFindings, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.Meds, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.Meds, new { @class = "form-control input-large" })
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h1>Surgeries</h1>
+                                                            <div class="border">
+                                                                <div class="row top-buffer ">
+                                                                    <div class="col-md-6 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            @Html.LabelFor(m => m.Surgeries1Type, new { @class = "col-md-3 control-label" })
+
+                                                                            <div class="col-md-5">
+                                                                                <div class="input-group">
+
+                                                                                    @Html.TextBoxFor(m => m.Surgeries1Type, new { @class = "form-control input-large" })
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            @Html.LabelFor(m => m.Surgeries1Date, new { @class = "col-md-3 control-label" })
+                                                                            <div class="col-md-5">
+                                                                                <div class="input-group">
+                                                                                    @Html.TextBoxFor(m => m.Surgeries1Date, new { @class = "form-control input-large" })
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row top-buffer ">
+                                                                    <div class="col-md-6 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            @Html.LabelFor(m => m.Surgeries2Type, new { @class = "col-md-3 control-label" })
+
+                                                                            <div class="col-md-5">
+                                                                                <div class="input-group">
+
+                                                                                    @Html.TextBoxFor(m => m.Surgeries2Type, new { @class = "form-control input-large" })
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            @Html.LabelFor(m => m.Surgeries2Date, new { @class = "col-md-3 control-label" })
+                                                                            <div class="col-md-5">
+                                                                                <div class="input-group">
+                                                                                    @Html.TextBoxFor(m => m.Surgeries2Date, new { @class = "form-control input-large" })
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row top-buffer ">
+                                                                    <div class="col-md-6 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            @Html.LabelFor(m => m.Surgeries3Type, new { @class = "col-md-3 control-label" })
+
+                                                                            <div class="col-md-5">
+                                                                                <div class="input-group">
+
+                                                                                    @Html.TextBoxFor(m => m.Surgeries3Type, new { @class = "form-control input-large" })
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-sm-6">
+                                                                        <div class="form-group">
+                                                                            @Html.LabelFor(m => m.Surgeries3Date, new { @class = "col-md-3 control-label" })
+                                                                            <div class="col-md-5">
+                                                                                <div class="input-group">
+                                                                                    @Html.TextBoxFor(m => m.Surgeries3Date, new { @class = "form-control input-large" })
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.Occupation, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.Occupation, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.WhenWorse, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.WhenWorse, new { @class = "form-control input-large" })
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.PhysicalDemands, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.PhysicalDemands, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.WhenBetter, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.WhenBetter, new { @class = "form-control input-large" })
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.Label("Work Status", new { @class = "control-label col-md-3" })
+                                                                        <div class="col-md-9">
+                                                                            @foreach (var item in Model.WorkStatus)
+                                                                            {
+                                                                                <input type="radio" name="WorkStatusStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.Reason, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.Reason, new { @class = "form-control input-large" })
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-12 col-sm-12">
+                                                                    <div class="form-group">
+                                                                        @Html.Label("Pain", new { @class = "col-md-2 control-label" })
+
+                                                                        <div class="col-md-10">
+                                                                            <div class="col-md-2">
+                                                                                <div class="input-group">
+
+                                                                                    @Html.TextBoxFor(m => m.PainPresent, new { @class = "form-control input-small" })
+
+                                                                                </div>
+
+                                                                            </div>
+                                                                            @Html.LabelFor(m => m.PainPresent, new { @class = "col-md-2 control-label" })
+                                                                            <div class="col-md-2">
+                                                                                <div class="input-group">
+
+                                                                                    @Html.TextBoxFor(m => m.PainBest, new { @class = "form-control input-small" })
+
+                                                                                </div>
+
+                                                                            </div>
+                                                                            @Html.LabelFor(m => m.PainBest, new { @class = "col-md-2 control-label" })
+                                                                            <div class="col-md-2">
+                                                                                <div class="input-group">
+
+                                                                                    @Html.TextBoxFor(m => m.PainWorst, new { @class = "form-control input-small" })
+
+                                                                                </div>
+
+                                                                            </div>
+                                                                            @Html.LabelFor(m => m.PainWorst, new { @class = "col-md-2 control-label" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.Label("Height", new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-3">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.feet, new { @class = "form-control input-small" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                        @Html.LabelFor(m => m.feet, new { @class = "col-md-1 control-label" })
+                                                                        <div class="col-md-3">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.inches, new { @class = "form-control input-small" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                        @Html.LabelFor(m => m.inches, new { @class = "col-md-1 control-label" })
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.Weight, new { @class = "col-md-3 control-label" })
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+                                                                                @Html.TextBoxFor(m => m.Weight, new { @class = "form-control input-large" })
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row top-buffer">
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(m => m.BMI, new { @class = "col-md-3 control-label" })
+
+                                                                        <div class="col-md-5">
+                                                                            <div class="input-group">
+
+                                                                                @Html.TextBoxFor(m => m.BMI, new { @class = "form-control input-large" })
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6">
+                                                                    <div class="form-group">
+                                                                        @Html.Label("Quality", new { @class = "control-label col-md-3" })
+                                                                        <div class="col-md-9">
+                                                                            @foreach (var item in Model.Quality)
+                                                                            {
+                                                                                <input type="radio" name="QualityStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h4> <strong> Summary of Objective Findings:  p</strong> → denotes pain below with movements</h4>
+                                                            <div class=" row ">
+                                                                <div class="col-md-12 col-ms-12">
+                                                                    <table class="table table-bordered">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th> Goni/inclinom</th>
+                                                                                <th>CERVICAL </th>
+                                                                                <th>CERVICAL </th>
+                                                                                <th>THORACIC </th>
+                                                                                <th style="border-bottom:0px !important;"> </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><strong>ACTION</strong><br /><span class="tiny-font">Normal avg. values below</span></td>
+                                                                                <td>AROM </td>
+                                                                                <td>PROM</td>
+                                                                                <td>AROM  </td>
+                                                                                <td rowspan="9" style="border-top:0px !important;"><img src="~/Content/Images/bodyregion.png" /></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>FLEXION </strong><br /><span class="tiny-font">45/60</span></td>
+                                                                                <td>@Html.TextBoxFor(m => m.FLEXIONAROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.FLEXIONPROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.FLEXIONTHORACICAROM, new { @class = "form-control input-small" })</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>EXTENSION  </strong><br /><span class="tiny-font">CERV  45/75</span></td>
+                                                                                <td>@Html.TextBoxFor(m => m.EXTENSIONAROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.EXTENSIONPROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.EXTENSIONTHORACICAROM, new { @class = "form-control input-small" })</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong> SIDEBEND RIGHT </strong><br /><span class="tiny-font"> 45/45</span></td>
+                                                                                <td>@Html.TextBoxFor(m => m.SIDEBENDRIGHTAROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.SIDEBENDRIGHTPROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.SIDEBENDRIGHTTHORACICAROM, new { @class = "form-control input-small" })</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>SIDEBEND LEFT </strong><br /><span class="tiny-font">45/45</span></td>
+                                                                                <td>@Html.TextBoxFor(m => m.SIDEBENDLEFTAROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.SIDEBENDLEFTPROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.SIDEBENDLEFTTHORACICAROM, new { @class = "form-control input-small" })</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>ROTATE RIGHT </strong><br /><span class="tiny-font"> 60 />80 </span></td>
+                                                                                <td>@Html.TextBoxFor(m => m.ROTATERIGHTAROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.ROTATERIGHTPROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.ROTATERIGHTTHORACICAROM, new { @class = "form-control input-small" })</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>ROTATE LEFT  </strong><br /><span class="tiny-font"> 60 />80</span></td>
+                                                                                <td>@Html.TextBoxFor(m => m.ROTATELEFTAROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.ROTATELEFTPROM, new { @class = "form-control input-small" })</td>
+                                                                                <td>@Html.TextBoxFor(m => m.ROTATELEFTTHORACICAROM, new { @class = "form-control input-small" })</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>POSTURE  </strong><br /><span class="tiny-font">  *Add macros</span></td>
+                                                                                <td colspan="3">
+
+                                                                                    <div class="form-group">
+                                                                                        @Html.Label("Cervical Lordosis", new { @class = "control-label col-md-3" })
+                                                                                        <div class="col-md-9">
+                                                                                            @foreach (var item in Model.CervicalLordosis)
+                                                                                            {
+                                                                                                <input type="radio" name="CervicalLordosisStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        @Html.Label("Lumbar Lordosis", new { @class = "control-label col-md-3" })
+                                                                                        <div class="col-md-9">
+                                                                                            @foreach (var item in Model.LumbarLordosis)
+                                                                                            {
+                                                                                                <input type="radio" name="LumbarLordosisStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        @Html.Label("Kyphosis", new { @class = "control-label col-md-3" })
+                                                                                        <div class="col-md-9">
+                                                                                            @foreach (var item in Model.Kyphosis)
+                                                                                            {
+                                                                                                <input type="radio" name="KyphosisStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="form-group">
+                                                                                        @Html.LabelFor(m => m.Scapulothoracic, new { @class = "col-md-3 control-label" })
+
+                                                                                        <div class="col-md-5">
+                                                                                            <div class="input-group">
+
+                                                                                                @Html.TextBoxFor(m => m.Scapulothoracic, new { @class = "form-control input-large" })
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        @Html.LabelFor(m => m.Asymmetry, new { @class = "col-md-3 control-label" })
+
+                                                                                        <div class="col-md-5">
+                                                                                            <div class="input-group">
+
+                                                                                                @Html.TextBoxFor(m => m.Asymmetry, new { @class = "form-control input-large" })
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        @Html.Label("First Rib", new { @class = "control-label col-md-3" })
+                                                                                        <div class="col-md-9">
+                                                                                            @foreach (var item in Model.FirstRib)
+                                                                                            {
+                                                                                                <input type="radio" name="FirstRibStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </td>
+
+
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td><strong>SPECIAL TESTS/& NEURAL TENSION TESTING  </strong><br /><span class="tiny-font"> </span></td>
+                                                                                <td colspan="3">
+                                                                                    <div class="form-group">
+
+                                                                                        <div class="col-md-10">
+                                                                                            @foreach (var item in Model.NEURATTENSIONTESTING)
+                                                                                            {
+                                                                                                <input type="radio" name="NEURATTENSIONTESTINGStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> MMT</th>
+                                                                        <th>R </th>
+                                                                        <th>L </th>
+                                                                        <th>MYTOMES </th>
+                                                                        <th>R </th>
+                                                                        <th>L </th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Upper Trap</td>
+                                                                        @foreach (var item in Model.UpperTrap)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="UpperTrapStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+
+
+                                                                        <td>C1 Cerv Rotation</td>
+                                                                        @foreach (var item in Model.C1CervRotation)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="C1CervRotationStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Middle Trap</td>
+                                                                        @foreach (var item in Model.MiddleTrap)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="MiddleTrapStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+
+                                                                        <td>C4 Shldr. Shrug</td>
+                                                                        @foreach (var item in Model.C4ShldrShrug)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="C4ShldrShrugStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> Lower Trap</td>
+                                                                        @foreach (var item in Model.LowerTrap)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="LowerTrapStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+                                                                        <td>C5 Shldr. Abd</td>
+                                                                        @foreach (var item in Model.C5ShldrAbd)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="C5ShldrAbdStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Deep Neck Flexor</td>
+                                                                        @foreach (var item in Model.DeepNeckFlexor)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="DeepNeckFlexorStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+
+                                                                        <td>C6 Wrist Ext/ Elb. flex</td>
+                                                                        @foreach (var item in Model.C6WristExt_Elbflex)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="C6WristExt_ElbflexStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td> UE flexion</td>
+                                                                        @foreach (var item in Model.UEflexion)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="UEflexionStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+                                                                        <td>C7 Wrist flex/ Elb.Ext</td>
+                                                                        @foreach (var item in Model.C7Wristflex_ElbExt)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="C7Wristflex_ElbExtStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td rowspan="2"> <strong>OSWESTRY NECK SCORE </strong></td>
+                                                                        <td colspan="2" rowspan="2">
+                                                                            <div class="form-group">
+                                                                                @Html.Label("Head Ache", new { @class = "control-label col-md-3" })
+                                                                                <div class="col-md-9">
+                                                                                    @foreach (var item in Model.HeadAche)
+                                                                                    {
+                                                                                        <input type="radio" name="HeadAcheStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td>C8 Finger Flex </td>
+                                                                        @foreach (var item in Model.C8FingerFlex)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="C8FingerFlexStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>T1 Digital Add/ Abd </td>
+                                                                        @foreach (var item in Model.T1DigitalAdd_Abd)
+                                                                        {
+                                                                            <td>
+                                                                                <input type="radio" name="T1DigitalAdd_AbdStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            </td>
+                                                                        }
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>REFLEXES  </td>
+                                                                        <td colspan="5">
+                                                                            @foreach (var item in Model.REFLEXES)
+                                                                            {
+                                                                                <input type="radio" name="REFLEXESStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            }
+                                                                        </td>
+
+
+                                                                    </tr>
+
+
+                                                                    <tr>
+                                                                        <td>DERMATOMES   </td>
+                                                                        <td colspan="5">
+                                                                            @foreach (var item in Model.DERMATOMES)
+                                                                            {
+                                                                                <input type="radio" name="DERMATOMESStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            }
+                                                                        </td>
+
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>RADICULAR SYMPTOMS    </td>
+                                                                        <td colspan="5">
+                                                                            @foreach (var item in Model.RADICULARSYMPTOMS)
+                                                                            {
+                                                                                <input type="radio" name="RADICULARSYMPTOMSStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            }
+                                                                            @Html.TextBoxFor(m => m.RADICULARSYMPTOMSOthers, new { @class = "input-small" })
+                                                                            <div class="form-group">
+                                                                                @Html.LabelFor(m => m.RADICULARSYMPTOMSSite, new { @class = "col-md-3 control-label" })
+                                                                                <div class="col-md-5">
+                                                                                    <div class="input-group">
+                                                                                        @Html.TextBoxFor(m => m.RADICULARSYMPTOMSSite, new { @class = "form-control input-small" })
+
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                @Html.LabelFor(m => m.RADICULARSYMPTOMSManualTraction, new { @class = "col-md-3 control-label" })
+                                                                                <div class="col-md-5">
+                                                                                    <div class="input-group">
+                                                                                        @Html.TextBoxFor(m => m.RADICULARSYMPTOMSManualTraction, new { @class = "form-control input-small" })
+
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                @Html.Label("Repeated Movement Testing", new { @class = "control-label col-md-3" })
+                                                                                <div class="col-md-9">
+                                                                                    @foreach (var item in Model.RepeatedMovementTesting)
+                                                                                    {
+                                                                                        <input type="radio" name="RepeatedMovementTestingStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>SEGMENTAL MOVEMENT & SOFT TISSUE PALPATION  </td>
+                                                                        <td colspan="5">
+                                                                            <div class="form-group">
+                                                                                @Html.Label("Segmental mobility", new { @class = "control-label col-md-3" })
+                                                                                <div class="col-md-9">
+                                                                                    @foreach (var item in Model.Segmentalmobility)
+                                                                                    {
+                                                                                        <input type="radio" name="SegmentalmobilityStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                @Html.Label("Under pain/TTP", new { @class = "control-label col-md-3" })
+                                                                                <div class="col-md-9">
+                                                                                    @foreach (var item in Model.UnderPain_TTP)
+                                                                                    {
+                                                                                        <input type="radio" name="UnderPain_TTPStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group">
+                                                                                @Html.Label("Trigger points noted in", new { @class = "control-label col-md-3" })
+                                                                                <div class="col-md-9">
+                                                                                    @foreach (var item in Model.Triggerpointesnoted)
+                                                                                    {
+                                                                                        <input type="radio" name="TriggerpointesnotedStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="form-group">
+                                                                                @Html.Label("Decreased muscle length/flexibility", new { @class = "control-label col-md-3" })
+                                                                                <div class="col-md-9">
+                                                                                    @foreach (var item in Model.Musclelength)
+                                                                                    {
+                                                                                        <input type="radio" name="MusclelengthStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </td>
+
+
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>WADDELLS SIGNS   </td>
+                                                                        <td colspan="5">
+
+                                                                            @foreach (var item in Model.WADDELLSSIGN)
+                                                                            {
+                                                                                <input type="radio" name="WADDELLSSIGNStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            }
+
+
+                                                                        </td>
+
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>OTHER FINDINGS / IMPAIRMENTS   </td>
+                                                                        <td colspan="5">
+                                                                            @foreach (var item in Model.OTHERFINDINGS_IMPAIRMENTS)
+                                                                            {
+                                                                                <input type="radio" name="OTHERFINDINGS_IMPAIRMENTSStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                                @Html.Label(item.Text, new { @class = "control-label" })
+                                                                            }
+
+
+
+                                                                        </td>
+
+
+                                                                    </tr>
+
+
+                                                                </tbody>
+
+                                                            </table>
+
+                                                            <article>
+                                                                <strong>Assessment: </strong>
+                                                                This patient presents with the above functional limitations, affecting ADL and work capacity.  Signs and symptoms are consistent with a differential diagnosis of (*ICD10 codes) _*macros drop down* _
+                                                                >Cervicalgia –M54.2
+                                                                >Cervical Radiculopathy- M54.12
+                                                                >Thoracic Pain- M54.6
+                                                            </article>
+
+                                                            <div>
+                                                                <div class="form-group">
+                                                                    @Html.Label("Rehab Potential", new { @class = "control-label col-md-3" })
+                                                                    <div class="col-md-9">
+                                                                        @foreach (var item in Model.RehabPotential)
+                                                                        {
+                                                                            <input type="radio" name="RehabPotentialStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    @Html.Label("Goals: to be met in", new { @class = "col-md-3 control-label" })
+                                                                    <div class="col-md-5">
+                                                                        <div class="input-group">
+                                                                            @Html.TextBoxFor(m => m.Goalstomet, new { @class = "form-control input-medium" })&nbsp;&nbsp;<strong>weeks</strong>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <ol>
+                                                                    <li>Pt will decrease Biometric score to @{@Html.TextBoxFor(m => m.Biometricscore, new { @class = "input-medium" })} indicating decreased risk for future injury.</li>
+                                                                    <li>Pt will demonstrate I and compliance with HEP to manage symptoms at home.</li>
+                                                                    <li>Patient will report decreased pain to @{@Html.TextBoxFor(m => m.PainPresent, new { @class = "input-small", @readonly = "readonly" })}/10 at present and @{@Html.TextBoxFor(m => m.PainWorst, new { @class = "input-small", @readonly = "readonly" })}//10 at worst to allow greater functional mobility.</li>
+                                                                    <li>
+                                                                        Patient will increase Cervical ROM and strength to WNL to improve
+                                                                        @foreach (var item in Model.WNLtoimprove)
+                                                                        {
+                                                                            <input type="radio" name="WNLtoimproveStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+                                                                        }
+                                                                    </li>
+                                                                    <li>
+                                                                        Patient will demonstrate proper body mechanics with the following activities
+                                                                        @foreach (var item in Model.Goalsactivities)
+                                                                        {
+                                                                            <input type="radio" name="GoalsactivitiesStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+                                                                        }
+                                                                        @foreach (var item in Model.functionalcapacity)
+                                                                        {
+                                                                            <input type="radio" name="functionalcapacityStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+                                                                        }
+                                                                        @{@Html.TextBoxFor(m => m.sitting, new { @class = "input-small" })}
+                                                                    </li>
+                                                                    <li>Pt will report no sleep disturbance due to increased pain for improved self care</li>
+                                                                </ol>
+                                                                <div>
+                                                                    <strong>Plan of Care:</strong>Physical Therapy@{@Html.TextBoxFor(m => m.PhysicalTherapyTime, new { @class = "input-small" })}x per week for@{@Html.TextBoxFor(m => m.xperweek, new { @class = "input-small" })}  weeks with treatment including the following:
+                                                                    @foreach (var item in Model.PlanofCare)
+                                                                    {
+                                                                        <input type="radio" name="PlanofCareStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                        @Html.Label(item.Text, new { @class = "control-label" })
+                                                                        if (@item.Value == "311")
+                                                                        {
+                                                                            foreach (var itemsub in Model.Modalities)
+                                                                            {
+                                                                                <input type="radio" name="ModalitiesStr" value="@itemsub.Value" checked="@itemsub.Selected" class="radio" id="@itemsub.Value-radio" />
+                                                                                @Html.Label(itemsub.Text, new { @class = "control-label" })
+                                                                            }
+                                                                            <br />
+                                                                        }
+                                                                        if (@item.Value == "312")
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m._DryNeedling, new { @class = "input-medium" })
+                                                                        }
+                                                                        if (@item.Value == "318")
+                                                                        {
+                                                                            @Html.TextBoxFor(m => m.AddDMEbox, new { @class = "input-medium" })
+                                                                        }
+                                                                    }
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div>
+                                                                <br /> <div><strong>Therapeutic Exercise </strong> to develop strength and endurance, range of motion, and flexibility@{@Html.TextBoxFor(m => m.TherapeuticExerciseTime, new { @class = "input-small" })}minutes@{@Html.TextBoxFor(m => m.TherapeuticExerciseUnits, new { @class = "input-small" })}units</div><br />
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th> Exercise</th>
+                                                                            <th>Sets</th>
+                                                                            <th>Reps </th>
+                                                                            <th>Resistance </th>
+                                                                            <th>Comments</th>
+
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExercise1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseSet1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseRep1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseResistanc1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseComments1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExercise2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseSet2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseRep2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseResistanc2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseComments2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExercise3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseSet3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseRep3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseResistanc3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticExerciseComments3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                                <br /> <div><strong>Therapeutic Activity </strong> to improve functional performance@{@Html.TextBoxFor(m => m.TherapeuticActivityTime, new { @class = "input-small" })}minutes@{@Html.TextBoxFor(m => m.TherapeuticActivityUnits, new { @class = "input-small" })}units</div><br />
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th> Exercise</th>
+                                                                            <th>Sets</th>
+                                                                            <th>Reps </th>
+                                                                            <th>Resistance </th>
+                                                                            <th>Comments</th>
+
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityExercise1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivitySet1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityRep1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityResistanc1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityComments1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityExercise2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivitySet2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityRep2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityResistanc2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityComments2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityExercise3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivitySet3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityRep3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityResistanc3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.TherapeuticActivityComments3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                                <br /> <div><strong>Neuromuscular Reeducation </strong> of movement, balance, coordination, kinesthetic sense, posture, and/or proprioception for sitting and/or standing activities@{@Html.TextBoxFor(m => m.NeuromuscularReeducationTime, new { @class = "input-small" })}minutes@{@Html.TextBoxFor(m => m.NeuromuscularReeducationUnits, new { @class = "input-small" })}units</div><br />
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th> Exercise</th>
+                                                                            <th>Sets</th>
+                                                                            <th>Reps </th>
+                                                                            <th>Resistance </th>
+                                                                            <th>Comments</th>
+
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationExercise1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationSet1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationRep1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationResistanc1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationComments1, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationExercise2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationSet2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationRep2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationResistanc2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationComments2, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationExercise3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationSet3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationRep3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationResistanc3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.TextBoxFor(m => m.NeuromuscularReeducationComments3, new { @class = "form-control input-small" })
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+
+
+                                                                <div>
+                                                                    <div>
+                                                                        <br /> <div><strong>Manual Therapy </strong> @{@Html.TextBoxFor(m => m.ManualTherapyTime, new { @class = "input-small" })}minutes@{@Html.TextBoxFor(m => m.ManualTherapyUnits, new { @class = "input-small" })}units</div><br />
+                                                                        @foreach (var item in Model.ManualTherapy)
+                                                                        {
+                                                                            <input type="radio" name="ManualTherapyStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+
+                                                                            if (@item.Value == "328")
+                                                                            {
+                                                                                @Html.TextBoxFor(m => m.Suboccipitals_ope, new { @class = "input-medium" })
+                                                                            }
+                                                                            if (@item.Value == "329")
+                                                                            {
+                                                                                @Html.TextBoxFor(m => m.Cervicalmobilizationsgrade, new { @class = "input-small" })
+                                                                                <span> open </span>@Html.TextBoxFor(m => m.Cervicalmobilizationsopen, new { @class = "input-small" })
+                                                                            }
+                                                                            if (@item.Value == "330")
+                                                                            {
+                                                                                @Html.TextBoxFor(m => m.Thoracicmobilizationgrade, new { @class = "input-small" })
+                                                                                <span> open </span>@Html.TextBoxFor(m => m.Thoracicmobilizationopen, new { @class = "input-small" })
+                                                                            }
+                                                                        }
+
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <br /> <div><strong>Self Care/Home Managemet </strong>activities of daily living and compensatory training, meal preparation, safety procedures, and instructions in use of assistive technology devices/adaptive equipment @{@Html.TextBoxFor(m => m.SelfCareTime, new { @class = "input-small" })}minutes</div><br />
+                                                                        @foreach (var item in Model.SelfCare)
+                {
+                                                                            <input type="radio" name="SelfCareStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+                                                                        }
+
+                                                                    </div>
+                                                                    <div>
+                                                                        <br /> <div><strong>Mechanical Traction </strong> @{@Html.TextBoxFor(m => m.MechanicalTractionTime, new { @class = "input-small" })}minutes,constant #@{@Html.TextBoxFor(m => m.MechanicalTractionConstant, new { @class = "input-small" })}patient positioned supine</div><br />
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <br /> <div><strong>Electrical Stimulation </strong> @{@Html.TextBoxFor(m => m.ElectricalStimulationTime, new { @class = "input-small" })}minutes</div><br />
+                                                                        @foreach (var item in Model.ElectricalStimulation)
+                {
+                                                                            <input type="radio" name="ElectricalStimulationStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+                                                                        }
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <br /> <div><strong>Ultrasound </strong> @{@Html.TextBoxFor(m => m.UltrasoundTime, new { @class = "input-small" })}minutes,location@{@Html.TextBoxFor(m => m.UltrasoundLocation, new { @class = "input-small" })}@{@Html.TextBoxFor(m => m.UltrasoundMHz, new { @class = "input-small" })}MHz@{@Html.TextBoxFor(m => m.UltrasoundW_cm2, new { @class = "input-small" })}W/cm^2</div><br />
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <br /> <div><strong>Hot/Cold Pack </strong>applied to cervical spine @{@Html.TextBoxFor(m => m.Hot_ColdPackTime, new { @class = "input-small" })}minutes</div><br />
+                                                                        @foreach (var item in Model.Hot_ColdPack)
+                {
+                                                                            <input type="radio" name="Hot_ColdPackStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+                                                                        }
+                                                                        <div class="form-group">
+                                                                            @Html.Label("Total Treatment Time", new { @class = "col-md-3 control-label" })
+
+                                                                            <div class="col-md-5">
+                                                                                <div class="input-group">
+
+                                                                                    @Html.TextBoxFor(m => m.Hot_ColdPackTotalTime, new { @class = "form-control input-large" })
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <br /> <div><strong>Manual Electrical Stim </strong> @{@Html.TextBoxFor(m => m.ManualTherapyTime, new { @class = "input-small" })}minutes@{@Html.TextBoxFor(m => m.ManualTherapyUnits, new { @class = "input-small" })}units</div><br />
+                                                                        @foreach (var item in Model.ManualElectricalStim)
+                {
+                                                                            <input type="radio" name="ManualElectricalStimStr" value="@item.Value" checked="@item.Selected" class="radio" id="@item.Value-radio" />
+                                                                            @Html.Label(item.Text, new { @class = "control-label" })
+
+                                                                            if (@item.Value == "342")
+                                                                            {
+                                                                                @Html.TextBoxFor(m => m.ManualElectricalStimCPTcodes, new { @class = "input-medium" })
+                                                                            }
+
+                                                                        }
+
+                                                                    </div>
+
+                                                                    <div class="row" style="margin-top:10px;">
+
+                                                                        <div class="col-md-6 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                @Html.Label("Time in", new { @class = "col-md-3 control-label" })
+
+                                                                                <div class="col-md-5">
+                                                                                    <div class="input-group">
+
+                                                                                        @Html.TextBoxFor(m => m.ExerciseTimeIn, new { @class = "form-control input-large flatpickr flatpickr-input active", @readonly = "readonly" })
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                        <div class="col-md-6 col-sm-12">
+                                                                            <div class="form-group">
+                                                                                @Html.Label("Time Out", new { @class = "col-md-3 control-label" })
+
+                                                                                <div class="col-md-5">
+                                                                                    <div class="input-group">
+
+                                                                                        @Html.TextBoxFor(m => m.ExerciseTimeOut, new { @class = "form-control input-large flatpickr flatpickr-input active", @readonly = "readonly" })
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="form-actions fluid">
+                                                                    <div style="padding: 10px;" class="col-sm-12 col-md-12">
+
+                                                                        <div class="col-sm-12 col-md-6">
+                                                                            <button type="submit" class="btn green" id="btnHidden" style="margin-left: 20%">Submit</button>
+                                                                        </div>
+                                                                        <div class="col-sm-12 col-md-6">
+                                                                            <a class="btn green btn-primary" id="cmpprint-report"
+                                                                               onclick="CRMPrintReport();">Print</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @*<div class="row">
+
+
+                                                                        <div class="form-group">
+                                                                            <div class="col-md-offset-2 col-md-6">
+                                                                                <input type="submit" value="Submit" class="btn btn-primary"  />
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>*@
+
+                                                            </div>
+
+    }
+                                                    </section>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <link rel="stylesheet" type="text/css" href="/content/styles/injurycloud.css">
+                                <style type="text/css">
+                                    .tiny-font {
+                                        font-size: 10px;
+                                        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                                    }
+
+                                    .top-buffer {
+                                        margin-top: 10px;
+                                    }
+
+                                    .form .form-body {
+                                        padding: 0;
+                                    }
+
+                                    .cntleft_aa {
+                                        width: auto;
+                                    }
+
+                                    .detailformbox_aa {
+                                        width: auto;
+                                    }
+
+                                    .dtlformbx_main_aa {
+                                        width: auto;
+                                        height: 40px;
+                                    }
+
+                                        .dtlformbx_main_aa span {
+                                            width: 110px;
+                                        }
+
+                                    .dtlformbx_01_aa {
+                                        margin: 0;
+                                        padding: 0;
+                                    }
+
+                                    .optionlist {
+                                        display: none;
+                                        position: fixed;
+                                        border: 1px solid #ADB2B5;
+                                        width: 125px;
+                                        height: 180px;
+                                        background-color: #F7F3F7;
+                                        z-index: 100000;
+                                    }
+
+                                    .sp-head_lft:hover {
+                                        background-position: -980px 0;
+                                        width: 41px;
+                                        height: 88px;
+                                        float: left;
+                                        background: url('/content/styles/images/head_lft_over.jpg') no-repeat top left;
+                                    }
+
+                                    .sp-head_rgt:hover {
+                                        background-position: -980px 0;
+                                        width: 41px;
+                                        height: 88px;
+                                        float: left;
+                                        background: url('/content/styles/images/head_rgt_hover.jpg') no-repeat top left;
+                                    }
+                                </style>
+
+                                <script type="text/javascript">
+                                    $(function () {
+
+                                        var bindDatePicker = function () {
+                                            $(".date").datetimepicker({
+                                                format: 'MM/DD/YYYY',
+                                                icons: {
+                                                    time: "fa fa-clock-o",
+                                                    date: "fa fa-calendar",
+                                                    up: "fa fa-arrow-up",
+                                                    down: "fa fa-arrow-down"
+                                                }
+                                            }).find('input:first').on("blur", function () {
+                                                // check if the date is correct. We can accept dd-mm-yyyy and yyyy-mm-dd.
+                                                // update the format if it's yyyy-mm-dd
+                                                var date = parseDate($(this).val());
+
+                                                if (!isValidDate(date)) {
+                                                    //create date based on momentjs (we have that)
+                                                    date = moment().format('MM/DD/YYYY');
+                                                }
+
+                                                $(this).val(date);
+                                            });
+                                        }
+
+                                        var isValidDate = function (value, format) {
+                                            format = format || false;
+                                            // lets parse the date to the best of our knowledge
+                                            if (format) {
+                                                value = parseDate(value);
+                                            }
+
+                                            var timestamp = Date.parse(value);
+
+                                            return isNaN(timestamp) == false;
+                                        }
+
+                                        var parseDate = function (value) {
+                                            var m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
+                                            if (m)
+                                                value = ("00" + m[1]).slice(-2) + '/' + ("00" + m[3]).slice(-2) + '/' + m[5];
+
+                                            return value;
+                                        }
+
+                                        bindDatePicker();
+
+
+                                        $('.flatpickr').flatpickr({
+                                            noCalendar: true,
+                                            enableTime: true,
+                                            dateFormat: 'h:i K'
+                                        });
+                                    });
+                                </script>
+
+                                <script type="text/javascript">
+
+                                    function Validate() {
+
+                                        if (document.getElementById("268-radio").checked == true) {
+                                            alert("You have selected Option 1");
+                                        }
+                                        else if (document.getElementById("option2").checked == true) {
+                                            alert("You have selected Option 2");
+                                        }
+                                        else if (document.getElementById("option3").checked == true) {
+                                            alert("You have selected Option 3");
+                                        }
+                                        else {
+                                            // DO NOTHING
+                                        }
+                                        return false;
+                                    }
+                                    function CRMPrintReport() {
+                                        $('#printCernivalEvalReport').printThis({
+                                            'header': "<h2> Intake Cervical/Thoracic Spine EVALUATION <br/></h2>",
+                                            'importCSS': true,            // import page CSS
+                                            'importStyle': true,
+                                            'loadCSS': "https://dev.injurycloud.com/content/metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css"
+
+                                        });
+                                    }
+                                </script>
+                                <!-- END JAVASCRIPTS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="clearfix">
+        </div>
+    </div>
+</div>

@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="tempDB_" Class="FunctionalFormDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=tempDB_;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="tempDB_ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AnswerTbl" Member="AnswerTbls">
+    <Type Name="AnswerTbl">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuestionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AnswerDesc" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="MedicalHistory_AnswerTbl" Member="MedicalHistory" ThisKey="QuestionId" OtherKey="Id" Type="MedicalHistory" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TestAnswer" Member="TestAnswers">
+    <Type Name="TestAnswer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TestId" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AnswerId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AnswerDesc" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.MedicalHistory" Member="MedicalHistories">
     <Type Name="MedicalHistory">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Question" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
       <Column Name="QuestionType" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="QuestionRegion" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Association Name="MedicalHistory_Answer" Member="Answers" ThisKey="Id" OtherKey="QuestionId" Type="Answer" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Answer" Member="Answers">
-    <Type Name="Answer">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="QuestionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="AnswerDesc" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Association Name="MedicalHistory_Answer" Member="MedicalHistory" ThisKey="QuestionId" OtherKey="Id" Type="MedicalHistory" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TestAnswer" Member="TestAnswers">
-    <Type Name="TestAnswer">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="TestId" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="QuestionId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="AnswerId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AnswerDesc" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Association Name="MedicalHistory_AnswerTbl" Member="AnswerTbls" ThisKey="Id" OtherKey="QuestionId" Type="AnswerTbl" />
     </Type>
   </Table>
 </Database>

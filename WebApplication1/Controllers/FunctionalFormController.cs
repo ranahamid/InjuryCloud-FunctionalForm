@@ -7,7 +7,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class FunctionalFormController : Controller
+    public class FunctionalFormController : Helper
     {
         // GET: FunctionalForm
         public ActionResult Index()
@@ -15,132 +15,6 @@ namespace WebApplication1.Controllers
             return View();
         }
         FunctionalFormDataContext db = new FunctionalFormDataContext();
-
-        public string GetIdForAns(string testId, int qId)
-        {
-
-            var q = (from ans in db.TestAnswers
-                     where ans.TestId == testId && ans.QuestionId == qId
-                     select ans.AnswerId).FirstOrDefault();
-            if (q != null)
-            {
-                return ((int)q).ToString();
-            }
-            else
-                return string.Empty;
-        }
-
-        public string GetAnsDesForAns(string testId, int qId)
-        {
-            var q = (from ans in db.TestAnswers
-                     where ans.TestId == testId && ans.QuestionId == qId
-                     select ans.AnswerDesc).FirstOrDefault();
-            if (q != null && q != string.Empty)
-                return q;
-            else
-                return string.Empty;
-        }
-        public void insertTestAnswerTbl(string test_id, int question_id, string answerIDstr)
-        {
-            if (test_id != null && answerIDstr != null)
-            {
-
-                var q = from ans in db.TestAnswers
-                        where ans.TestId == test_id && ans.QuestionId == question_id
-                        select ans;
-
-                //update
-                if (q != null && q.Count() == 1)
-                {
-                    TestAnswer testAns = q.Single();
-                    testAns.AnswerId = Int32.Parse(answerIDstr);
-                }
-                else 
-                {
-                    //insert
-                    db.TestAnswers.InsertOnSubmit(new TestAnswer
-                    {
-                        TestId = test_id,
-                        QuestionId = question_id,
-                        AnswerId = Int32.Parse(answerIDstr)
-                    });
-                }
-                try
-                {
-                    db.SubmitChanges();
-                }
-                catch (Exception e)
-                {
-
-                }
-            }
-            
-        }
-
-        public void insertTestAnswerTblDesc(string test_id, int question_id, string answeDescription)
-        {
-            if (test_id != null && answeDescription != null)
-            {
-                var q = from ans in db.TestAnswers
-                        where ans.TestId == test_id && ans.QuestionId == question_id
-                        select ans;
-
-                //update
-                if (q != null && q.Count() == 1)
-                {
-                    TestAnswer testAns = q.Single();
-                    testAns.AnswerDesc = answeDescription;
-                }
-                else 
-                {
-                    //insert
-                    db.TestAnswers.InsertOnSubmit(new TestAnswer
-                    {
-                        TestId = test_id,
-                        QuestionId = question_id,
-                        AnswerDesc = answeDescription
-                    });
-                }
-
-            }
-            try
-            {
-                db.SubmitChanges();
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-
-
-        public List<SelectListItem> MakeSelectList(int inputId, string inputValue)
-        {
-            var q = from ans in db.Answers
-                    where ans.QuestionId == inputId
-                    select ans;
-            List<SelectListItem> ListItm = new List<SelectListItem>();
-
-
-            if (q != null)
-            {
-                foreach (var item in q)
-                {
-                    if( item!=null && item.AnswerDesc != null &&  item.AnswerDesc!=string.Empty && item.Id.ToString() != string.Empty)
-                    {
-                        ListItm.Add(new SelectListItem
-                        {
-                            Text = item.AnswerDesc,
-                            Value = item.Id.ToString(),
-                            Selected = (item.Id.ToString() == inputValue) ? true : false
-                        });
-                    }
-
-                }
-            }
-
-            return ListItm;
-        }
 
         [HttpGet]
         public ActionResult Test(string id)
@@ -151,14 +25,17 @@ namespace WebApplication1.Controllers
             medicalHistory.TestId = testId;
 
             //pain description
+          
             medicalHistory.BestDescribesPainStr = GetIdForAns(testId, 1);
             medicalHistory.BestDescribesPain = MakeSelectList(1, medicalHistory.BestDescribesPainStr);
 
-            medicalHistory.BestDescribesPainStr = GetIdForAns(testId, 2);
-            medicalHistory.BestDescribesFrequencyPain = MakeSelectList(2, medicalHistory.BestDescribesPainStr);
-
-            medicalHistory.BestDescribesPainStr = GetIdForAns(testId, 3);
-            medicalHistory.PainFeelWorse = MakeSelectList(3, medicalHistory.BestDescribesPainStr);
+            medicalHistory.BestDescribesFrequencyPainStr = GetIdForAns(testId, 2);
+            medicalHistory.BestDescribesFrequencyPain = MakeSelectList(2, medicalHistory.BestDescribesFrequencyPainStr);
+            
+            
+            //NEED TO ADD  -1 
+            medicalHistory.PainFeelWorseStr = GetIdListForAns(testId, 3);
+            medicalHistory.PainFeelWorse = MakeSelectListfromList(3, medicalHistory.PainFeelWorseStr);
 
             //5,6,7
 
@@ -356,9 +233,6 @@ namespace WebApplication1.Controllers
             medicalHistory.OswestryPSCORE = GetAnsDesForAns(testId, 72); //12
 
 
-
-
-
             return View(medicalHistory);
         }
 
@@ -370,7 +244,14 @@ namespace WebApplication1.Controllers
 
             model.BestDescribesPain = MakeSelectList(1, model.BestDescribesPainStr);
             model.BestDescribesFrequencyPain = MakeSelectList(2, model.BestDescribesPainStr);
-            model.PainFeelWorse = MakeSelectList(3, model.BestDescribesPainStr);
+            
+            
+            
+            //NEED TO ADD-2
+           
+            model.PainFeelWorse = MakeSelectListfromList(3, model.PainFeelWorseStr);
+
+
 
             model.BestDescribesPainrightNow= MakeSelectList(5, model.BestDescribesPainrightNowStr);
             model.WorstPainOverPast = MakeSelectList(6, model.WorstPainOverPastStr);
@@ -447,18 +328,21 @@ namespace WebApplication1.Controllers
             model.Section10 = MakeSelectList(67, model.Section10Str);
             model.Section11 = MakeSelectList(68, model.Section11Str);
 
-            
+
+            string testId = model.TestId;
 
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             //save into db
-            string testId = model.TestId;
+         
             //pain description
             insertTestAnswerTbl(testId, 1, model.BestDescribesPainStr);
             insertTestAnswerTbl(testId, 2, model.BestDescribesFrequencyPainStr);
-            insertTestAnswerTbl(testId, 3, model.PainFeelWorseStr);
+
+            //NEED TO ADD - 3
+            insertTestAnswerTblList(testId, 3, model.PainFeelWorseStr);
 
             insertTestAnswerTblDesc(testId, 4, model.makesPainFeelBetter);
 

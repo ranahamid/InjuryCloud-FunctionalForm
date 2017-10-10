@@ -17,7 +17,7 @@
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
+            
             @Html.HiddenFor(m => m.TestId)
 
             <h1>PAIN DESCRIPTION</h1>
@@ -49,8 +49,11 @@
                     <div class="col-md-8">
                         @foreach (var item in Model.PainFeelWorse)
                         {
-                            <input type="radio" name="PainFeelWorseStr" value="@item.Value" checked="@item.Selected" class="radio-inline" id="@item.Value-radio" />
-                            @Html.Label(item.Text, new { @class = "control-label" })
+                          
+                                <input type="checkbox" name="PainFeelWorseStr" value="@item.Value" checked="@item.Selected" class="checkbox-inline" id="@item.Value-checkbox"  />
+                                @Html.Label(item.Value, new { @class = "control-label" })
+                            
+                           
                         }
                     </div>
                 </div>

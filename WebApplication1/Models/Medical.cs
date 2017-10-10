@@ -6,12 +6,6 @@ using System.Web;
 
 namespace WebApplication1.Models
 {
-    public class testIdCls
-    {
-        [Display(Name = "Test Id: ")]
-        public string TestId { get; set; }
-    }
-
     public class Medical
     {
         [Display(Name = "Test Id: ")]
@@ -25,7 +19,7 @@ namespace WebApplication1.Models
         public string BestDescribesFrequencyPainStr { get; set; }
 
         public ICollection<System.Web.Mvc.SelectListItem> PainFeelWorse { get; set; }
-        public string PainFeelWorseStr { get; set; }
+        public List<string> PainFeelWorseStr { get; set; }
 
         //
         public ICollection<System.Web.Mvc.SelectListItem> BestDescribesPainrightNow { get; set; }
@@ -89,11 +83,11 @@ namespace WebApplication1.Models
 
 
         [Display(Name = "feet")]
-        [Range(2, 8, ErrorMessage = "Enter valid height in feet")]
+      //  [Range(2, 8, ErrorMessage = "Enter valid height in feet")]
         public int feet { get; set; }
 
         [Display(Name = "inches")]
-        [Range(0, 11, ErrorMessage = "Enter valid height in inch")]
+       // [Range(0, 11, ErrorMessage = "Enter valid height in inch")]
         public int inches { get; set; }
 
         [Display(Name = "Email")]
@@ -101,7 +95,7 @@ namespace WebApplication1.Models
         public string Email { get; set; }
 
         [Display(Name = "Weight")]
-        [Range(2, 300, ErrorMessage = "Enter valid weight")]
+       // [Range(2, 300, ErrorMessage = "Enter valid weight")]
         public int Weight { get; set; }
 
         public ICollection<System.Web.Mvc.SelectListItem> Sex { get; set; }
@@ -241,8 +235,8 @@ namespace WebApplication1.Models
         public ICollection<System.Web.Mvc.SelectListItem> Section11 { get; set; }
         public string Section11Str { get; set; }
 
-        [Display(Name ="Name")]
-        public string OswestryName {get;set;}
+        [Display(Name = "Name")]
+        public string OswestryName { get; set; }
 
         [Display(Name = "Date")]
         public DateTime OswestryDate { get; set; }
@@ -255,9 +249,10 @@ namespace WebApplication1.Models
         public string OswestryPSCORE { get; set; }
 
     }
-
-
-
-
+    public class testIdCls
+    {
+        [Display(Name = "Test Id: ")]
+        public string TestId { get; set; }
+    }
 
 }
